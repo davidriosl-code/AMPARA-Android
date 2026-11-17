@@ -1,0 +1,11 @@
+{
+  "name": "ecoresilia-asistente-nube",
+  "version": "0.9.0-rc4.3",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test"
+  },
+  "engines": { "node": ">=22" }
+}

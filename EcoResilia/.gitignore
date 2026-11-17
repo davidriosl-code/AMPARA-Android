@@ -1,0 +1,30 @@
+.gradle/
+.idea/
+**/build/
+local.properties
+*.jks
+*.keystore
+.DS_Store
+*.iml
+
+# Configuracion Firebase por proyecto; no copiar el JSON de MakeItSo
+**/google-services.json
+**/service-account*.json
+
+secrets.properties
+**/secrets.properties
+**/firebase-admin*.json
+**/credenciales*.json
+**/estado_envios.sqlite
+**/avisos_pendientes.json
+**/monitor_eco.log
+
+# Monitor, respaldos, caches y credenciales locales
+**/.env
+**/.env.*
+**/firebase_deps/
+**/avisos_respaldo*.json
+**/kapt_error.txt
+**/*.sqlite
+**/*.db
+**/*.log

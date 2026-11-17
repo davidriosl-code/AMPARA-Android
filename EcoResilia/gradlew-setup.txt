@@ -1,0 +1,4 @@
+Este ZIP no incluye gradle-wrapper.jar porque el entorno de generación no tiene acceso a Internet.
+En Android Studio, abre la carpeta del proyecto. Si pide configurar Gradle, usa una instalación Gradle 8.9.
+Después ejecuta en la terminal: gradle wrapper --gradle-version 8.9
+Eso creará gradlew, gradlew.bat y gradle/wrapper/gradle-wrapper.jar.

@@ -1,0 +1,51 @@
+name: EcoResilia · Monitor GeoSINPAD (nube)
+
+"on":
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: 'Vista previa, inicializar historial o simulacro individual'
+        required: true
+        type: choice
+        default: preview
+        options:
+          - preview
+          - bootstrap
+          - demo
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ecoresilia-monitor-regional
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Instalar dependencias
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+      - name: Pruebas de validación del monitor
+        run: python -m unittest discover -s tests -v
+      - name: Ejecutar consulta o prueba
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          ECORESILIA_DEMO_TOKEN: ${{ secrets.ECORESILIA_DEMO_TOKEN }}
+          ECORESILIA_AUTO_PUBLISH: ${{ vars.ECORESILIA_AUTO_PUBLISH || 'false' }}
+          EVENT_NAME: ${{ github.event_name }}
+          REQUESTED_MODE: ${{ inputs.modo || 'preview' }}
+        shell: bash
+        run: |
+          if [ "$EVENT_NAME" = "schedule" ]; then
+            python monitor/ecoresilia_cloud.py --mode auto
+          else
+            python monitor/ecoresilia_cloud.py --mode "$REQUESTED_MODE"
+          fi

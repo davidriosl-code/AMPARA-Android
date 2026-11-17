@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+*.json.key
+firebase-admin.json
+*service-account*.json
+*service_account*.json
+avisos_pendientes.json
+estado_envios.sqlite
+salidas_monitor/
